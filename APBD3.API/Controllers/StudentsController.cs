@@ -23,7 +23,7 @@ namespace APBD3.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetStudents(string orderBy)
         {
-            return Ok(await _studentService.GetAll());
+            return Ok(new {Studens = await _studentService.GetAll(), OrderBy = orderBy});
         }
 
         [HttpGet("{studentId}/enrollments")]
@@ -48,7 +48,7 @@ namespace APBD3.API.Controllers
         public async Task<IActionResult> CreateStudent(CreateUser command)
         {
             await _studentService.CreateStudent(command);
-            return Created($"", null);
+            return Created("", null);
         }
 
         [HttpDelete("{studentId:int}")]
