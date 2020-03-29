@@ -18,7 +18,27 @@ namespace APBD3.API.Persistence
 
         public async Task<Student> FindById(string id)
         {
-            throw new NotImplementedException();
+            await using var connection = new SqlConnection(_connectionString);
+            await using var command = new SqlCommand
+            {
+                Connection = connection,
+                CommandText = "SELECT * FROM Student" +
+                              "WHERE Student.IndexNumber = @id"
+            };
+            command.Parameters.AddWithValue("id", id);
+            await connection.OpenAsync();
+            var reader = await command.ExecuteReaderAsync();
+            while (await reader.ReadAsync())
+            {
+                var firstName = reader["FirstName"].ToString();
+                var lastName = reader["LastName"].ToString();
+                var identifier = reader["IndexNumber"].ToString();
+                var birthDate = reader["BirthDate"].ToString();
+                var student = new Student(identifier, firstName, lastName, birthDate);
+                return student;
+            }
+
+            throw new Exception("Could not execute reader");
         }
 
         public async Task<IEnumerable<Enrollment>> FindEnrollments(string id)
@@ -74,21 +94,6 @@ namespace APBD3.API.Persistence
         }
 
         public async Task Add(Student student)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<IEnumerable<Student>> Find(Func<Student, bool> predicate)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task Remove(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task Remove(int id)
         {
             throw new NotImplementedException();
         }

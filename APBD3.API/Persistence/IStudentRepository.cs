@@ -1,5 +1,4 @@
 ﻿using APBD3.API.Models;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,7 +10,5 @@ namespace APBD3.API.Persistence
         Task<IEnumerable<Enrollment>> FindEnrollments(string id);
         Task<IEnumerable<Student>> FindAll();
         Task Add(Student student);
-        Task<IEnumerable<Student>> Find(Func<Student, bool> predicate);
-        Task Remove(string id);
     }
 }
