@@ -35,6 +35,7 @@ namespace APBD3.API
                 app.UseDeveloperExceptionPage();
             }
 
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
