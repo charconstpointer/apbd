@@ -1,6 +1,4 @@
-﻿using APBD3.API.Models;
-using APBD3.API.Persistence;
-using APBD3.API.Requests;
+﻿using APBD3.API.Requests;
 using APBD3.API.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -11,19 +9,17 @@ namespace APBD3.API.Controllers
     [Route("[controller]")]
     public class StudentsController : ControllerBase
     {
-        private readonly IStudentRepository _studentRepository;
         private readonly IStudentService _studentService;
 
-        public StudentsController(IStudentRepository studentRepository, IStudentService studentService)
+        public StudentsController(IStudentService studentService)
         {
-            _studentRepository = studentRepository;
             _studentService = studentService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetStudents(string orderBy)
         {
-            return Ok(new {Studens = await _studentService.GetAll(), OrderBy = orderBy});
+            return Ok(new { Studens = await _studentService.GetAll(), OrderBy = orderBy });
         }
 
         [HttpGet("{studentId}/enrollments")]
@@ -54,13 +50,13 @@ namespace APBD3.API.Controllers
         [HttpDelete("{studentId:int}")]
         public async Task<IActionResult> DeleteStudent(int studentId)
         {
-            return Ok(new {Message = "Usuwanie ukończone"});
+            return Ok(new { Message = "Usuwanie ukończone" });
         }
 
         [HttpPut("{studentId:int}")]
         public async Task<IActionResult> UpdateStudent(int studentId)
         {
-            return Ok(new {Message = "Aktualizacja dokończona"});
+            return Ok(new { Message = "Aktualizacja dokończona" });
         }
     }
 }
