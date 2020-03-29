@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using APBD3.API.Models;
+﻿using APBD3.API.Models;
 using APBD3.API.Persistence;
 using APBD3.API.Requests;
 using APBD3.API.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace APBD3.API.Controllers
 {
@@ -25,20 +22,33 @@ namespace APBD3.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetStudents(string orderBy)
         {
-            var students = await _studentRepository.Find(x => true);
-            return Ok(new {Students = students, OrderBy = orderBy});
+            // var students = await _studentRepository.Find(x => true);
+            var students = await _studentRepository.FindAll();
+            return Ok(new {Students = students.ToViewModel(), OrderBy = orderBy});
         }
 
-        [HttpGet("{studentId:int}")]
-        public async Task<IActionResult> Get(int studentId)
+        [HttpGet("{studentId}/enrollments")]
+        public async Task<IActionResult> Get(string studentId)
         {
-            var student = (await _studentRepository.Find(x => x.Id == studentId)).FirstOrDefault();
-            if (student is null)
+            var enrollments = (await _studentRepository.FindEnrollments(studentId)).ToList();
+            if (enrollments.Any())
             {
-                return NotFound();
+                return Ok(enrollments.ToViewModel());
             }
 
-            return Ok(student.ToViewModel());
+            return NotFound();
+        }
+
+        [HttpPost("{studentId}")]
+        public async Task<IActionResult> GetStudent(string studentId)
+        {
+            if (string.IsNullOrWhiteSpace(studentId))
+            {
+                return BadRequest();
+            }
+
+            var student = await _studentRepository.FindById(studentId);
+            return Ok(student);
         }
 
         [HttpPost]

@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using APBD3.API.Models;
 using APBD3.API.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -21,8 +19,6 @@ namespace APBD3.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<ICollection<Student>>(new List<Student>
-                {new Student("Adam", "Kowalski", "s1234"), new Student("Mada", "Ikslawok", "s4321")});
             services.AddTransient<IStudentRepository, StudentRepository>();
             services.AddControllers();
         }
