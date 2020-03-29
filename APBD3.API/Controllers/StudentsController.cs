@@ -47,22 +47,20 @@ namespace APBD3.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateStudent(CreateUser command)
         {
-            //Will throw NotImplementedException 
-            var student = new Student(command.FirstName, command.LastName, command.IndexName);
-            await _studentRepository.Add(student);
-            return Created($"/{student.Id}", null);
+            await _studentService.CreateStudent(command);
+            return Created($"", null);
         }
 
         [HttpDelete("{studentId:int}")]
         public async Task<IActionResult> DeleteStudent(int studentId)
         {
-            return Ok(new { Message = $"{studentId} zostal usuniety" });
+            return Ok(new {Message = "Usuwanie ukończone"});
         }
 
         [HttpPut("{studentId:int}")]
         public async Task<IActionResult> UpdateStudent(int studentId)
         {
-            return Ok(new { Message = $"{studentId} zostal uaktualniony" });
+            return Ok(new {Message = "Aktualizacja dokończona"});
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 using APBD3.API.Models;
@@ -95,7 +96,21 @@ namespace APBD3.API.Persistence
 
         public async Task Add(Student student)
         {
-            throw new NotImplementedException();
+            await using var connection = new SqlConnection(_connectionString);
+            await using var command = new SqlCommand
+            {
+                Connection = connection,
+                CommandText = "INSERT INTO Student " +
+                              "VALUES (@IndexNumber, @FirstName, @LastName, @BirthDate, @EnrollmentId)"
+            };
+            command.Parameters.AddWithValue("IndexNumber", student.IndexName);
+            command.Parameters.AddWithValue("FirstName", student.FirstName);
+            command.Parameters.AddWithValue("LastName", student.LastName);
+            command.Parameters.AddWithValue("BirthDate", student.BirthDate);
+            command.Parameters.AddWithValue("EnrollmentId", student.EnrollmentId);
+            command.CommandType = CommandType.Text;
+            await connection.OpenAsync();
+            await command.ExecuteNonQueryAsync();
         }
     }
 }

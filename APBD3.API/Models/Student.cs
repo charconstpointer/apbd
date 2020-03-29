@@ -8,6 +8,7 @@ namespace APBD3.API.Models
         public string FirstName { get; }
         public string LastName { get; }
         public string IndexName { get; }
+        public int EnrollmentId { get; set; }
         public DateTime BirthDate { get; set; }
 
         public Student(string firstName, string lastName, string indexName)
@@ -26,6 +27,17 @@ namespace APBD3.API.Models
             FirstName = firstName;
             LastName = lastName;
             IndexName = indexName;
+        }
+
+        public Student(string firstName, string lastName, string indexName, DateTime birthDate, int enrollmentId)
+        {
+            var random = new Random();
+            Id = $"s{random.Next(int.MaxValue)}";
+            FirstName = firstName;
+            LastName = lastName;
+            IndexName = indexName;
+            BirthDate = birthDate;
+            EnrollmentId = enrollmentId;
         }
     }
 }

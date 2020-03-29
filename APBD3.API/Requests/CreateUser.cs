@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace APBD3.API.Requests
 {
@@ -7,5 +8,7 @@ namespace APBD3.API.Requests
         [Required] public string FirstName { get; set; }
         [Required] public string LastName { get; set; }
         [Required] public string IndexName { get; set; }
+        [Required] public DateTime BirthDate { get; set; }
+        public int EnrollmentId { get; set; }
     }
 }
