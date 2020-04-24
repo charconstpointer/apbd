@@ -1,3 +1,4 @@
+using APBD3.API.Middleware;
 using APBD3.API.Persistence;
 using APBD3.API.Services;
 using Microsoft.AspNetCore.Builder;
@@ -39,7 +40,7 @@ namespace APBD3.API
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.UseMiddleware<StudentsMiddleware>();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
