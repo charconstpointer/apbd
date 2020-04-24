@@ -59,10 +59,10 @@ namespace APBD3.API.Persistence
             var reader = await command.ExecuteReaderAsync();
             while (await reader.ReadAsync())
             {
-                var semester = int.Parse(reader["Semester"].ToString());
-                var idStudy = int.Parse(reader["IdStudy"].ToString());
-                var identifier = int.Parse(reader["IdEnrollment"].ToString());
-                var startDate = DateTime.Parse(reader["StartDate"].ToString());
+                var semester = int.Parse(reader["Semester"].ToString() ?? string.Empty);
+                var idStudy = int.Parse(reader["IdStudy"].ToString() ?? string.Empty);
+                var identifier = int.Parse(reader["IdEnrollment"].ToString() ?? string.Empty);
+                var startDate = DateTime.Parse(reader["StartDate"].ToString() ?? string.Empty);
                 var enrollment = new Enrollment(identifier, semester, idStudy, startDate);
                 enrollments.Add(enrollment);
             }
