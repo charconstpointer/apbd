@@ -1,8 +1,8 @@
-﻿using APBD3.API.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using APBD3.API.Models;
 
-namespace APBD3.API.Persistence
+namespace APBD3.API.Persistence.Interfaces
 {
     public interface IStudentRepository
     {

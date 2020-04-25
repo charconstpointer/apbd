@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 using APBD3.API.Models;
+using APBD3.API.Persistence.Interfaces;
 using Microsoft.Extensions.Configuration;
 
 namespace APBD3.API.Persistence

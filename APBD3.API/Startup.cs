@@ -1,6 +1,8 @@
 using APBD3.API.Middleware;
 using APBD3.API.Persistence;
+using APBD3.API.Persistence.Interfaces;
 using APBD3.API.Services;
+using APBD3.API.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
