@@ -4,12 +4,12 @@ namespace APBD3.API.Models
 {
     public class Student
     {
-        public string Id { get; set; }
+        public string Id { get; }
         public string FirstName { get; }
         public string LastName { get; }
         public string IndexName { get; }
-        public int EnrollmentId { get; set; }
-        public DateTime BirthDate { get; set; }
+        public int EnrollmentId { get; }
+        public DateTime BirthDate { get; }
         
 
         public Student(string id, string firstName, string lastName, string indexName)
@@ -29,6 +29,14 @@ namespace APBD3.API.Models
             IndexName = indexName;
             BirthDate = birthDate;
             EnrollmentId = enrollmentId;
+        }
+
+        public Student(string firstName, string lastName, string indexName, DateTime birthDate)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            IndexName = indexName;
+            BirthDate = birthDate;
         }
     }
 }
