@@ -26,14 +26,17 @@ namespace APBD3.API.Persistence
                 CommandText = "SELECT * FROM Studies " +
                               "WHERE Studies.Name = @studiesName"
             };
-            command.Parameters.AddWithValue("studiesName", studiesName);
             await connection.OpenAsync();
-            await connection.BeginTransactionAsync();
+            var transaction =  connection.BeginTransaction();
+            command.Transaction = transaction;
+            command.Parameters.AddWithValue("studiesName", studiesName);
+
             var reader = await command.ExecuteReaderAsync();
             if (!reader.HasRows)
             {
-                throw new StudiesNotFoundException();
+                throw new StudiesNotFoundException("Studies not found");
             }
+
             while (await reader.ReadAsync())
             {
                 var name = reader["Name"]?.ToString();
@@ -42,6 +45,4 @@ namespace APBD3.API.Persistence
             }
         }
     }
-
-    
 }
