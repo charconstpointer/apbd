@@ -25,5 +25,13 @@ namespace APBD3.API.Controllers
                 command.BirthDate, command.Studies);
             return Created("", enrollment.ToViewModel());
         }
+
+        [HttpPost("promotions")]
+        public async Task<IActionResult> Promote(PromoteStudents command)
+        {
+            if(!ModelState.IsValid) return BadRequest();
+            var enrollment = await _studiesService.PromoteStudents(command.Studies, command.Semester);
+            return Created("",enrollment.ToViewModel());
+        }
     }
 }

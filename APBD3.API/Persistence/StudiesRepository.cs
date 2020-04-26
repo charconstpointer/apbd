@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using APBD3.API.Exceptions;
 using APBD3.API.Models;
@@ -96,6 +97,7 @@ namespace APBD3.API.Persistence
                     enrollment.StartDate = (DateTime) studentEnrollments["StartDate"];
                 }
             }
+
             await using var addEnrollmentForStudent = new SqlCommand
             {
                 Transaction = transaction,
@@ -114,6 +116,76 @@ namespace APBD3.API.Persistence
             await studentEnrollments.DisposeAsync();
             await transaction.CommitAsync();
             return enrollment;
+        }
+
+        public async Task<bool> EnrollmentExists(string studies, int semester)
+        {
+            await using var connection = new SqlConnection(_connectionString);
+            await using var command = new SqlCommand
+            {
+                Connection = connection,
+                CommandText = "SELECT * FROM Enrollment " +
+                              "JOIN Studies " +
+                              "ON Enrollment.IdStudy = Studies.IdStudy " +
+                              "WHERE Studies.Name = @studies " +
+                              "AND Enrollment.Semester = @semester ",
+                Parameters =
+                {
+                    new SqlParameter("studies", studies),
+                    new SqlParameter("semester", semester)
+                }
+            };
+            await connection.OpenAsync();
+            var enrollments = await command.ExecuteReaderAsync();
+            return enrollments.HasRows;
+        }
+
+        public async Task<Enrollment> PromoteStudents(string studies, int semester)
+        {
+            await using var connection = new SqlConnection(_connectionString);
+            await using var command = new SqlCommand
+            {
+                CommandText = "sp_promote_students",
+                Connection = connection,
+                CommandType = CommandType.StoredProcedure,
+                Parameters =
+                {
+                    new SqlParameter("studies", studies),
+                    new SqlParameter("semester", semester),
+                    new SqlParameter("updatedEnrollmentId", -1)
+                }
+            };
+            command.Parameters[2].Direction = ParameterDirection.Output;
+
+            await connection.OpenAsync();
+            await command.ExecuteReaderAsync();
+            if (!int.TryParse(command.Parameters[2].Value.ToString(), out var newEnrollmentId))
+            {
+                throw new EnrollmentNotFoundException();
+            }
+
+            await using var findEnrollmentById = new SqlCommand
+            {
+                Connection = connection,
+                CommandText = "SELECT * FROM Enrollment " +
+                              "WHERE Enrollment.IdEnrollment = @id",
+                Parameters =
+                {
+                    new SqlParameter("id", newEnrollmentId)
+                }
+            };
+            var enrollmentReader = await findEnrollmentById.ExecuteReaderAsync();
+            var enrollment = new Enrollment();
+            while (await enrollmentReader.ReadAsync())
+            {
+                enrollment.IdEnrollment = (int) enrollmentReader["IdEnrollment"];
+                enrollment.Semester = (int) enrollmentReader["Semester"];
+                enrollment.IdStudy = (int) enrollmentReader["IdStudy"];
+                enrollment.StartDate = (DateTime) enrollmentReader["StartDate"];
+            }
+
+            return enrollment;
+
         }
     }
 }
