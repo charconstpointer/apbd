@@ -6,6 +6,6 @@ namespace APBD3.API.Services.Interfaces
 {
     public interface IStudiesService
     {
-        Task EnrollStudent(string indexNumber, string firstName, string lastName, DateTime birthDate, string studies);
+        Task<Enrollment> EnrollStudent(string indexNumber, string firstName, string lastName, DateTime birthDate, string studies);
     }
 }

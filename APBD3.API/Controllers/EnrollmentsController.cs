@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using APBD3.API.Requests;
 using APBD3.API.Services.Interfaces;
+using APBD3.API.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APBD3.API.Controllers
@@ -20,9 +21,9 @@ namespace APBD3.API.Controllers
         public async Task<IActionResult> Add(CreateStudentEnrollment command)
         {
             if (!ModelState.IsValid) return BadRequest();
-            await _studiesService.EnrollStudent(command.IndexNumber, command.FirstName, command.LastName,
+            var enrollment = await _studiesService.EnrollStudent(command.IndexNumber, command.FirstName, command.LastName,
                 command.BirthDate, command.Studies);
-            return Created("", null);
+            return Created("", enrollment.ToViewModel());
         }
     }
 }

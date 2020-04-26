@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlClient;
 using System.Net;
 using System.Threading.Tasks;
 using APBD3.API.Exceptions;
@@ -34,6 +35,7 @@ namespace APBD3.API.Middleware
             context.Response.StatusCode = exception switch
             {
                 StudiesNotFoundException _ => (int) HttpStatusCode.BadRequest,
+                SqlException _ => (int) HttpStatusCode.InternalServerError,
                 ValidationException _ => (int) HttpStatusCode.BadRequest,
                 _ => 500
             };

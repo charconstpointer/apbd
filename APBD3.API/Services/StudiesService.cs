@@ -15,11 +15,11 @@ namespace APBD3.API.Services
             _studiesRepository = studiesRepository;
         }
 
-        public async Task EnrollStudent(string indexNumber, string firstName, string lastName, DateTime birthDate,
+        public Task<Enrollment> EnrollStudent(string indexNumber, string firstName, string lastName, DateTime birthDate,
             string studies)
         {
             var student = new Student(firstName, lastName, indexNumber, birthDate);
-            await _studiesRepository.CreateStudentEnrollment(student, studies);
+            return _studiesRepository.CreateStudentEnrollment(student, studies);
         }
     }
 }

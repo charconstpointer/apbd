@@ -6,6 +6,6 @@ namespace APBD3.API.Persistence.Interfaces
 {
     public interface IStudiesRepository
     {
-        Task CreateStudentEnrollment(Student student, string studiesName);
+        Task<Enrollment> CreateStudentEnrollment(Student student, string studiesName);
     }
 }

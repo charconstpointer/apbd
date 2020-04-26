@@ -9,6 +9,10 @@ namespace APBD3.API.Models
         public int IdStudy { get; set; }
         public DateTime StartDate { get; set; }
 
+        public Enrollment()
+        {
+            
+        }
         public Enrollment(int idEnrollment, int semester, int idStudy, DateTime startDate)
         {
             IdEnrollment = idEnrollment;
@@ -16,5 +20,6 @@ namespace APBD3.API.Models
             IdStudy = idStudy;
             StartDate = startDate;
         }
+
     }
 }
