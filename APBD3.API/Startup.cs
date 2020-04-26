@@ -27,6 +27,7 @@ namespace APBD3.API
             services.AddTransient<IStudentRepository, StudentRepository>();
             services.AddTransient<IStudiesRepository, StudiesRepository>();
             services.AddTransient<IStudiesService, StudiesService>();
+            services.AddTransient<ILogService, LogService>();
             services.AddControllers();
         }
 
@@ -44,6 +45,7 @@ namespace APBD3.API
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseMiddleware<LoggingMiddleware>();
             app.UseMiddleware<IdentityMiddleware>();
             app.UseMiddleware<ExceptionHandling>();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
