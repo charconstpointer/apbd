@@ -11,5 +11,6 @@ namespace APBD3.API.Services.Interfaces
         Task<StudentViewModel> GetById(string studentId);
         Task<IEnumerable<EnrollmentViewModel>> FindStudentEnrollments(string studentId);
         Task CreateStudent(CreateUser command);
+        Task<bool> StudendExists(string studentIndex);
     }
 }

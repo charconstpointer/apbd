@@ -113,5 +113,23 @@ namespace APBD3.API.Persistence
             await connection.OpenAsync();
             await command.ExecuteNonQueryAsync();
         }
+
+        public async Task<bool> Exists(string studentIndex)
+        {
+            await using var connection = new SqlConnection(_connectionString);
+            await using var command = new SqlCommand
+            {
+                Connection = connection,
+                CommandText = "SELECT * FROM Student "+
+                              "WHERE Student.IndexNumber = @index",
+                Parameters =
+                {
+                    new SqlParameter("index", studentIndex)
+                }
+            };
+            await connection.OpenAsync();
+            var reader = await command.ExecuteReaderAsync();
+            return reader.HasRows;
+        }
     }
 }

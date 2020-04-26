@@ -10,5 +10,6 @@ namespace APBD3.API.Persistence.Interfaces
         Task<IEnumerable<Enrollment>> FindEnrollments(string id);
         Task<IEnumerable<Student>> FindAll();
         Task Add(Student student);
+        Task<bool> Exists(string studentIndex);
     }
 }

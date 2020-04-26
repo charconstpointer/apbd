@@ -50,8 +50,14 @@ namespace APBD3.API.Services
 
         public async Task CreateStudent(CreateUser command)
         {
-            var student = new Student(command.FirstName, command.LastName, command.IndexName, command.BirthDate, command.EnrollmentId);
+            var student = new Student(command.FirstName, command.LastName, command.IndexName, command.BirthDate,
+                command.EnrollmentId);
             await _studentRepository.Add(student);
+        }
+
+        public Task<bool> StudendExists(string studentIndex)
+        {
+            return _studentRepository.Exists(studentIndex);
         }
     }
 }

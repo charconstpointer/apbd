@@ -44,7 +44,7 @@ namespace APBD3.API
             app.UseRouting();
 
             app.UseAuthorization();
-            app.UseMiddleware<StudentsMiddleware>();
+            app.UseMiddleware<IdentityMiddleware>();
             app.UseMiddleware<ExceptionHandling>();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
