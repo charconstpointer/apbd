@@ -69,9 +69,9 @@ namespace APBD3.API
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            // app.UseMiddleware<LoggingMiddleware>();
-            // app.UseMiddleware<IdentityMiddleware>();
-            // app.UseMiddleware<ExceptionHandling>();
+            app.UseMiddleware<LoggingMiddleware>();
+            app.UseMiddleware<IdentityMiddleware>();
+            app.UseMiddleware<ExceptionHandling>();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
