@@ -11,5 +11,6 @@ namespace APBD3.API.Persistence.Interfaces
         Task<IEnumerable<Student>> FindAll();
         Task Add(Student student);
         Task<bool> Exists(string studentIndex);
+        Task SetPassword(string index, string password, string salt);
     }
 }

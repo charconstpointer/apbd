@@ -120,7 +120,7 @@ namespace APBD3.API.Persistence
             await using var command = new SqlCommand
             {
                 Connection = connection,
-                CommandText = "SELECT * FROM Student "+
+                CommandText = "SELECT * FROM Student " +
                               "WHERE Student.IndexNumber = @index",
                 Parameters =
                 {
@@ -130,6 +130,27 @@ namespace APBD3.API.Persistence
             await connection.OpenAsync();
             var reader = await command.ExecuteReaderAsync();
             return reader.HasRows;
+        }
+
+        public async Task SetPassword(string index, string password, string salt)
+        {
+            await using var connection = new SqlConnection(_connectionString);
+            await using var command = new SqlCommand
+            {
+                Connection = connection,
+                CommandText = "UPDATE Student " +
+                              "SET Student.Password = @password, " +
+                              "Student.Hash = @hash " +
+                              "WHERE Student.IndexNumber = @index",
+                Parameters =
+                {
+                    new SqlParameter("index", index),
+                    new SqlParameter("password", password),
+                    new SqlParameter("salt", salt)
+                }
+            };
+            await connection.OpenAsync();
+            await command.ExecuteReaderAsync();
         }
     }
 }

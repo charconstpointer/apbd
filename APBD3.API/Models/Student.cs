@@ -10,7 +10,9 @@ namespace APBD3.API.Models
         public string IndexName { get; }
         public int EnrollmentId { get; }
         public DateTime BirthDate { get; }
-        
+        public string Password { get; set; }
+        public string Salt { get; set; }
+
 
         public Student(string id, string firstName, string lastName, string indexName)
         {
