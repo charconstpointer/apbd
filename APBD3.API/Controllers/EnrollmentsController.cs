@@ -2,6 +2,7 @@
 using APBD3.API.Requests;
 using APBD3.API.Services.Interfaces;
 using APBD3.API.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APBD3.API.Controllers
@@ -18,6 +19,7 @@ namespace APBD3.API.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Add(CreateStudentEnrollment command)
         {
             if (!ModelState.IsValid) return BadRequest();
@@ -27,6 +29,7 @@ namespace APBD3.API.Controllers
         }
 
         [HttpPost("promotions")]
+        [Authorize]
         public async Task<IActionResult> Promote(PromoteStudents command)
         {
             if(!ModelState.IsValid) return BadRequest();
