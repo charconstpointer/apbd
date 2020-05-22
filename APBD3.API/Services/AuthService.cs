@@ -39,18 +39,19 @@ namespace APBD3.API.Services
                 throw new Exception("Student not found");
             }
 
-            var refreshToken = Guid.NewGuid();
+
             //if first time login (password is empty in the database)
             if (string.IsNullOrEmpty(student.Password) && string.IsNullOrEmpty(student.Salt))
             {
+                var refreshToken = Guid.NewGuid();
                 var hashedPassword = HashPassword(128, student.Password);
                 await _studentRepository.SetPassword(index, hashedPassword.Hash, hashedPassword.Salt, refreshToken);
-                return new {Token =  CreateToken(student.IndexName, _key), RefreshToken = refreshToken};
+                return new {Token = CreateToken(student.IndexName, _key), RefreshToken = refreshToken};
             }
 
             if (CredentialsAreCorrect(password, student.Password, student.Salt))
             {
-                return new {Token =  CreateToken(student.IndexName, _key)};
+                return new {Token = CreateToken(student.IndexName, _key)};
             }
 
             throw new Exception(":(");
