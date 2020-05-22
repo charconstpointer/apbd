@@ -12,6 +12,7 @@ namespace APBD3.API.Models
         public DateTime BirthDate { get; }
         public string Password { get; set; }
         public string Salt { get; set; }
+        public Guid RefreshToken { get; set; }
 
 
         public Student(string id, string firstName, string lastName, string indexName)
@@ -20,6 +21,20 @@ namespace APBD3.API.Models
             FirstName = firstName;
             LastName = lastName;
             IndexName = indexName;
+        }
+
+        public Student(string id, string firstName, string lastName, string indexName, int enrollmentId,
+            DateTime birthDate, string password, string salt, Guid refreshToken)
+        {
+            Id = id;
+            FirstName = firstName;
+            LastName = lastName;
+            IndexName = indexName;
+            EnrollmentId = enrollmentId;
+            BirthDate = birthDate;
+            Password = password;
+            Salt = salt;
+            RefreshToken = refreshToken;
         }
 
         public Student(string firstName, string lastName, string indexName, DateTime birthDate, int enrollmentId)

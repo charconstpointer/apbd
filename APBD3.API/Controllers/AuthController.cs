@@ -22,5 +22,12 @@ namespace APBD3.API.Controllers
             var token = await _authService.Login(command.Index, command.Password);
             return Ok(token);
         }
+
+        [HttpPost("refresh")]
+        public async Task<IActionResult> RefreshToken(RefreshTokenRequest command)
+        {
+            var token = await _authService.RefreshToken(command.Index, command.RefreshToken);
+            return Ok(token);
+        }
     }
 }

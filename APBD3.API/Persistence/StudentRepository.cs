@@ -36,7 +36,11 @@ namespace APBD3.API.Persistence
                 var lastName = reader["LastName"].ToString();
                 var identifier = reader["IndexNumber"].ToString();
                 var birthDate = reader["BirthDate"].ToString();
-                var student = new Student(identifier, firstName, lastName, birthDate);
+                var password = reader["Password"].ToString();
+                var salt = reader["Salt"].ToString();
+                var refreshToken = reader["RefreshToken"].ToString();
+                var student = new Student(identifier, firstName, lastName, identifier, 0, DateTime.Parse(birthDate),
+                    password, salt, Guid.Parse(refreshToken));
                 return student;
             }
 
@@ -132,7 +136,7 @@ namespace APBD3.API.Persistence
             return reader.HasRows;
         }
 
-        public async Task SetPassword(string index, string password, string salt)
+        public async Task SetPassword(string index, string password, string salt, Guid refreshToken)
         {
             await using var connection = new SqlConnection(_connectionString);
             await using var command = new SqlCommand
@@ -141,12 +145,14 @@ namespace APBD3.API.Persistence
                 CommandText = "UPDATE Student " +
                               "SET Student.Password = @password, " +
                               "Student.Hash = @hash " +
+                              "Student.RefreshToken = @refreshToken" +
                               "WHERE Student.IndexNumber = @index",
                 Parameters =
                 {
                     new SqlParameter("index", index),
                     new SqlParameter("password", password),
-                    new SqlParameter("salt", salt)
+                    new SqlParameter("salt", salt),
+                    new SqlParameter("refreshToken", refreshToken)
                 }
             };
             await connection.OpenAsync();

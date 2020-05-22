@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using APBD3.API.Models;
 
@@ -11,6 +12,6 @@ namespace APBD3.API.Persistence.Interfaces
         Task<IEnumerable<Student>> FindAll();
         Task Add(Student student);
         Task<bool> Exists(string studentIndex);
-        Task SetPassword(string index, string password, string salt);
+        Task SetPassword(string index, string password, string salt, Guid refreshToken);
     }
 }
