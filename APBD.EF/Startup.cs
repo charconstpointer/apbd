@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using APBD.EF.Data;
+using APBD.EF.Queries;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,6 +29,7 @@ namespace APBD.EF
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApdbContext>();
+            services.AddMediatR(typeof(GetStudents).Assembly);
             services.AddControllers();
         }
 
