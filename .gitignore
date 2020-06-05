@@ -338,3 +338,5 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/APBD.EF/Properties/launchSettings.json
+/APBD3.API/requestsLog.txt
