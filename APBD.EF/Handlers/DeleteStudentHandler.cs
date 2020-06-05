@@ -28,7 +28,7 @@ namespace APBD.EF.Handlers
 
             _context.Student.Remove(student);
             await _context.SaveChangesAsync(cancellationToken);
-            return Unit.Value;
+            return Unit.Value; 
         }
     }
 }
