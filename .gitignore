@@ -340,3 +340,4 @@ ASALocalRun/
 healthchecksdb
 /APBD.EF/Properties/launchSettings.json
 /APBD3.API/requestsLog.txt
+/APBD.EF.CodeFirst/Properties/launchSettings.json
