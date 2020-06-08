@@ -71,7 +71,7 @@ namespace APBD.EF.CodeFirst.Migrations
                         column: x => x.IdDoctor,
                         principalTable: "Doctors",
                         principalColumn: "IdDoctor",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Prescription_Patient_IdPatient",
                         column: x => x.IdPatient,
@@ -112,14 +112,24 @@ namespace APBD.EF.CodeFirst.Migrations
                 values: new object[] { 1, "fds@dsa.com", "Doctor", "Disrespect" });
 
             migrationBuilder.InsertData(
+                table: "Medicament",
+                columns: new[] { "IdMedicament", "Description", "Name", "Type" },
+                values: new object[] { 1, "wanna meet god?", "🎢", "good stuff" });
+
+            migrationBuilder.InsertData(
                 table: "Patient",
                 columns: new[] { "IdPatient", "Brithdate", "FirstName", "LastName" },
-                values: new object[] { 1, new DateTime(2010, 6, 8, 20, 19, 38, 380, DateTimeKind.Local).AddTicks(3198), "Bar", "Farski" });
+                values: new object[] { 1, new DateTime(2010, 6, 8, 20, 58, 3, 981, DateTimeKind.Local).AddTicks(9295), "Bar", "Farski" });
 
             migrationBuilder.InsertData(
                 table: "Prescription",
                 columns: new[] { "IdPrescription", "Date", "DueDate", "IdDoctor", "IdPatient" },
-                values: new object[] { 1, new DateTime(2020, 6, 8, 18, 19, 38, 382, DateTimeKind.Utc).AddTicks(5516), new DateTime(2020, 6, 8, 20, 19, 38, 383, DateTimeKind.Local).AddTicks(6120), 1, 1 });
+                values: new object[] { 1, new DateTime(2020, 6, 8, 18, 58, 3, 984, DateTimeKind.Utc).AddTicks(1843), new DateTime(2020, 6, 8, 20, 58, 3, 985, DateTimeKind.Local).AddTicks(2387), 1, 1 });
+
+            migrationBuilder.InsertData(
+                table: "Prescription_Medicament",
+                columns: new[] { "IdMedicament", "IdPrescription", "Details", "Dose" },
+                values: new object[] { 1, 1, "Skada", 44 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Prescription_IdDoctor",
