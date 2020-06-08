@@ -5,14 +5,16 @@ using System.Threading;
 using System.Threading.Tasks;
 using APBD.EF.Commands;
 using APBD.EF.Data;
+using APBD.EF.DTO;
 using APBD3.API.Exceptions;
+using APBD3.API.ViewModels;
 using MediatR;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace APBD.EF.Handlers
 {
-    public class CreateStudentPromotionHandler : IRequestHandler<CreateStudentPromotion>
+    public class CreateStudentPromotionHandler : IRequestHandler<CreateStudentPromotion, EnrollmentDto>
     {
         private readonly ApdbContext _context;
 
@@ -21,7 +23,8 @@ namespace APBD.EF.Handlers
             _context = context;
         }
 
-        public async Task<Unit> Handle(CreateStudentPromotion request, CancellationToken cancellationToken)
+        public async Task<EnrollmentDto> Handle(CreateStudentPromotion request,
+            CancellationToken cancellationToken)
         {
             var enrollmentExists = _context.Enrollment.Any(e =>
                 e.IdStudyNavigation.Name == request.Studies && e.Semester == request.Semester);
@@ -36,16 +39,14 @@ namespace APBD.EF.Handlers
                 new SqlParameter("semester", request.Semester),
                 idOut
             );
-            // if (!int.TryParse(idOut.Value.ToString(), out var id))
-            // {
-            //     throw new Exception("Enrollment not found");
-            // }
-            //
-            // var enrollment =
-            //     await _context.Enrollment.FirstOrDefaultAsync(e => e.IdEnrollment == id, cancellationToken);
-            // return enrollment;
-            return Unit.Value;
+            if (!int.TryParse(idOut.Value.ToString(), out var id))
+            {
+                throw new Exception("Enrollment not found");
+            }
 
+            var enrollment =
+                await _context.Enrollment.FirstOrDefaultAsync(e => e.IdEnrollment == id, cancellationToken);
+            return enrollment.AsDto();
         }
     }
 }
