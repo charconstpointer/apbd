@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APBD3.API", "APBD3.API\APBD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APBD.EF", "APBD.EF\APBD.EF.csproj", "{705D43B8-95C0-4D9B-B0B0-6F68099D3FEA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APBD.EF.CodeFirst", "APBD.EF.CodeFirst\APBD.EF.CodeFirst.csproj", "{13F444EF-3153-4A1F-AC99-CA295BDE77C6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{705D43B8-95C0-4D9B-B0B0-6F68099D3FEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{705D43B8-95C0-4D9B-B0B0-6F68099D3FEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{705D43B8-95C0-4D9B-B0B0-6F68099D3FEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13F444EF-3153-4A1F-AC99-CA295BDE77C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13F444EF-3153-4A1F-AC99-CA295BDE77C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13F444EF-3153-4A1F-AC99-CA295BDE77C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13F444EF-3153-4A1F-AC99-CA295BDE77C6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
