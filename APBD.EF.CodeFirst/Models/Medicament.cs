@@ -11,6 +11,6 @@ namespace APBD.EF.CodeFirst.Models
         [Column(TypeName = "varchar(100)")] public string Name { get; set; }
         [Column(TypeName = "varchar(100)")] public string Description { get; set; }
         [Column(TypeName = "varchar(100)")] public string Type { get; set; }
-        public ICollection<PrescriptionMedicament> PrescriptionMedicaments { get; set; }
+        public ICollection<PrescriptionMedicament> PrescriptionMedicaments { get; set; } = new List<PrescriptionMedicament>();
     }
 }

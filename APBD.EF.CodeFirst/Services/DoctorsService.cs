@@ -68,6 +68,7 @@ namespace APBD.EF.CodeFirst.Services
             var doctors = await _context.Doctors
                 .Include(d => d.Prescriptions)
                 .ThenInclude(p => p.PrescriptionMedicaments)
+                .ThenInclude(pm=>pm.Medicament)
                 .Include(d => d.Prescriptions)
                 .ThenInclude(p => p.Patient)
                 .ToListAsync();

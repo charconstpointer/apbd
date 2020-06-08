@@ -51,8 +51,22 @@ namespace APBD.EF.CodeFirst.Data
             modelBuilder.Entity<Patient>().HasData(patient);
             modelBuilder.Entity<Doctor>().HasData(doctor);
             modelBuilder.Entity<Doctor>().HasMany(x => x.Prescriptions)
-                .WithOne(x => x.Doctor).OnDelete(DeleteBehavior.SetNull);
+                .WithOne(x => x.Doctor).OnDelete(DeleteBehavior.ClientSetNull);
             modelBuilder.Entity<Prescription>().HasData(prescription);
+            var medicament = new Medicament
+                {Description = "wanna meet god?", Name = "🎢", Type = "good stuff", IdMedicament = 1};
+            modelBuilder.Entity<Medicament>().HasData(new List<Medicament>
+            {
+                medicament
+            });
+            var pm = new PrescriptionMedicament
+            {
+                Details = "Skada", Dose = 44, IdMedicament = medicament.IdMedicament, IdPrescription = prescription.IdPrescription
+            };
+            modelBuilder.Entity<PrescriptionMedicament>().HasData(new List<PrescriptionMedicament>
+            {
+                pm
+            });
         }
     }
 }

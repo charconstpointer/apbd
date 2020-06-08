@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace APBD.EF.CodeFirst.Migrations
 {
     [DbContext(typeof(ApbdContext))]
-    [Migration("20200608181938_init")]
+    [Migration("20200608185804_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -70,6 +70,15 @@ namespace APBD.EF.CodeFirst.Migrations
                     b.HasKey("IdMedicament");
 
                     b.ToTable("Medicament");
+
+                    b.HasData(
+                        new
+                        {
+                            IdMedicament = 1,
+                            Description = "wanna meet god?",
+                            Name = "🎢",
+                            Type = "good stuff"
+                        });
                 });
 
             modelBuilder.Entity("APBD.EF.CodeFirst.Models.Patient", b =>
@@ -96,7 +105,7 @@ namespace APBD.EF.CodeFirst.Migrations
                         new
                         {
                             IdPatient = 1,
-                            Brithdate = new DateTime(2010, 6, 8, 20, 19, 38, 380, DateTimeKind.Local).AddTicks(3198),
+                            Brithdate = new DateTime(2010, 6, 8, 20, 58, 3, 981, DateTimeKind.Local).AddTicks(9295),
                             FirstName = "Bar",
                             LastName = "Farski"
                         });
@@ -133,8 +142,8 @@ namespace APBD.EF.CodeFirst.Migrations
                         new
                         {
                             IdPrescription = 1,
-                            Date = new DateTime(2020, 6, 8, 18, 19, 38, 382, DateTimeKind.Utc).AddTicks(5516),
-                            DueDate = new DateTime(2020, 6, 8, 20, 19, 38, 383, DateTimeKind.Local).AddTicks(6120),
+                            Date = new DateTime(2020, 6, 8, 18, 58, 3, 984, DateTimeKind.Utc).AddTicks(1843),
+                            DueDate = new DateTime(2020, 6, 8, 20, 58, 3, 985, DateTimeKind.Local).AddTicks(2387),
                             IdDoctor = 1,
                             IdPatient = 1
                         });
@@ -159,6 +168,15 @@ namespace APBD.EF.CodeFirst.Migrations
                     b.HasIndex("IdPrescription");
 
                     b.ToTable("Prescription_Medicament");
+
+                    b.HasData(
+                        new
+                        {
+                            IdMedicament = 1,
+                            IdPrescription = 1,
+                            Details = "Skada",
+                            Dose = 44
+                        });
                 });
 
             modelBuilder.Entity("APBD.EF.CodeFirst.Models.Prescription", b =>
@@ -166,7 +184,6 @@ namespace APBD.EF.CodeFirst.Migrations
                     b.HasOne("APBD.EF.CodeFirst.Models.Doctor", "Doctor")
                         .WithMany("Prescriptions")
                         .HasForeignKey("IdDoctor")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("APBD.EF.CodeFirst.Models.Patient", "Patient")
