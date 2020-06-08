@@ -36,7 +36,7 @@ namespace APBD3.API.Middleware
             {
                 StudiesNotFoundException _ => (int) HttpStatusCode.BadRequest,
                 SqlException _ => (int) HttpStatusCode.InternalServerError,
-                EnrollmentNotFoundException _ => (int) HttpStatusCode.BadRequest,
+                EnrollmentNotFoundException _ => (int) HttpStatusCode.NotFound,
                 ValidationException _ => (int) HttpStatusCode.BadRequest,
                 _ => 500
             };

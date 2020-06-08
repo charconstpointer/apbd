@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace APBD.EF.Data
 {
-    public partial class ApdbContext : DbContext
+    public class ApdbContext : DbContext
     {
         public ApdbContext()
         {
@@ -73,6 +73,9 @@ namespace APBD.EF.Data
             OnModelCreatingPartial(modelBuilder);
         }
 
-        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+        private void OnModelCreatingPartial(ModelBuilder modelBuilder)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

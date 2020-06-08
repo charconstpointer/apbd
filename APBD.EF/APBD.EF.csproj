@@ -11,5 +11,9 @@
       <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.4" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\APBD3.API\APBD3.API.csproj" />
+    </ItemGroup>
+
 
 </Project>

@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using APBD.EF.Commands;
 using APBD.EF.Data;
+using APBD3.API.Exceptions;
 using MediatR;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -26,7 +27,7 @@ namespace APBD.EF.Handlers
                 e.IdStudyNavigation.Name == request.Studies && e.Semester == request.Semester);
             if (!enrollmentExists)
             {
-                throw new Exception("Enrollment notfound");
+                throw new EnrollmentNotFoundException();
             }
 
             var idOut = new SqlParameter("updatedEnrollmentId", -1) {Direction = ParameterDirection.Output};

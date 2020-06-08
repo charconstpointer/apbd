@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using APBD.EF.Data;
 using APBD.EF.Queries;
+using APBD3.API.Middleware;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
@@ -46,7 +48,7 @@ namespace APBD.EF
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.UseMiddleware<ExceptionHandling>();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }

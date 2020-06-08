@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using APBD.EF.Commands;
 using APBD.EF.Data;
 using APBD.EF.Models;
+using APBD3.API.Exceptions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,18 +27,12 @@ namespace APBD.EF.Handlers
                 FirstName = request.FirstName, LastName = request.LastName, IndexNumber = request.IndexNumber,
                 BirthDate = request.BirthDate
             };
-            await _context.Database.BeginTransactionAsync(cancellationToken);
-            var studies = await _context.Studies.FirstOrDefaultAsync(s => s.Name == request.Studies,
-                cancellationToken);
-            if (studies is null)
-            {
-                throw new Exception("Provided studies no dont exist");
-            }
-
+            var studies = await FindStudies(request, cancellationToken);
             var firstSemesterEnrollments = studies.Enrollment.Where(e => e.Semester == 1).ToList();
+            Enrollment enrollment;
             if (!firstSemesterEnrollments.Any())
             {
-                var enrollment = new Enrollment
+                enrollment = new Enrollment
                 {
                     Semester = 1,
                     IdStudyNavigation = studies,
@@ -45,11 +40,27 @@ namespace APBD.EF.Handlers
                 };
                 await _context.Enrollment.AddAsync(enrollment, cancellationToken);
             }
+            else
+            {
+                enrollment = firstSemesterEnrollments.First();
+            }
 
+            student.IdEnrollementNavigation = enrollment;
             await _context.Student.AddAsync(student, cancellationToken);
-            _context.Database.CommitTransaction();
             await _context.SaveChangesAsync(cancellationToken);
             return Unit.Value;
+        }
+
+        private async Task<Studies> FindStudies(CreateStudentEnrollment request, CancellationToken cancellationToken)
+        {
+            var studies = await _context.Studies.FirstOrDefaultAsync(s => s.Name == request.Studies,
+                cancellationToken);
+            if (studies is null)
+            {
+                throw new StudiesNotFoundException($"{request.Studies} could not be found");
+            }
+
+            return studies;
         }
     }
 }
